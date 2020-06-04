@@ -1859,17 +1859,65 @@ showstringspaces=false}
 
     \subsection{Tipos de recursividad}
 
+        Atendiendo a la forma que tenga elalgoritmo recursivo podemos hacer la siguiente 
+        clasificación:
+
         \subsubsection{Recursividad lineal}
 
-            \paragraph{Recursividad lineal por la cola}
+            Una llamada recursiva genera, como mucho, otra llamaad recursiva.
+
+            \paragraph{Recursividad lineal por la cola} Es un tipo de recursividad lineal especial 
+            en la que la llamada recursiva es la última operación que se realiza.
 
         \subsubsection{Recursividad múltiple}
 
-    \subsection{Técnica divide y vencerás}
+            Son necesarias múltiples llamadas recursivas desde la misma función. Se distinguen 
+            dos técnicas de recursividad múltiple:
 
-    \subsection{Técnica de vuelta atrás o backtracking}
+            \paragraph{Técnica divide y vencerás}
 
-        \subsubsection{Esquema general de estos algoritmos}
+                Consiste en transformar un problema de tamaño $n$ en problemas más pequeños, de tamaño 
+                menor que $n$. De tal modo que dando solución a los problemas unitarios se pueda 
+                cnstruir la solución al problema concreto.
+
+                \subparagraph{Ejemplo: las Torres de Hanoi}
+
+                    Hay tres postes: $A$, $B$ y $C$. En el poste $A$ se ponen $n$ discos de diámetro 
+                    diferente detal manera que un disco de diámetro mayor siempre queda debajo de uno 
+                    de diámetro menor. El objetivo es mover los discos al poste $C$ usando $B$ como
+                    auxiliar. Sólo puede moverse un disco superior de cualquier poste a otro, y un disco 
+                    mayor jamás puede quedar sobre uno menor.
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.7\textwidth]{resources/recursividad03.png}
+                        \caption{Situación inicial en el problema de las Torres de Hanoi.}
+                        \label{hanoi01}
+                    \end{figure}
+            
+                    Si planteamos el problema con un solo disco, su solución es tan simple como mover 
+                    el disco del poste $A$ al poste $C$.
+
+                    Si planteamos el problema con dos discos, la solución implicaría mover el disco 
+                    más pequeño de $A$ a $B$, el más grande de $A$ a $C$ y finalmente el disco pequeño 
+                    de $B$ a $C$. Esta forma de operar es válida para cualquier número de discos $n$. 
+                    Consistiría en mover los $n-1$ discos superiores de $A$ a $B$, el disco $N$ de 
+                    $A$ a $C$ y, finalmente, los $n-1$ de $B$ a $C$. Con la particularidad recursiva de 
+                    que el movimiento de los $n-1$ discos de un poste a otro es nuevamente el mismo 
+                    problema de las Torres de Hanoi, pero con un disco menos (Véase la figura \ref{hanoi03}
+                    para observar la secuencia de movimientos representada gráficamente).
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.7\textwidth]{resources/recursividad05.png}
+                        \caption{Secuencia de movimientos para el problema de las Torres de Hanoi con 
+                        3 discos.}
+                        \label{hanoi03}
+                    \end{figure}
+
+            \paragraph{Técnica de vuelta atrás o backtracking}
+
+                \subparagraph{Esquema general de estos algoritmos}
 
     \subsection{Ventajas e inconvenientes de la recursividad}
 
