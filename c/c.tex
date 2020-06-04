@@ -1675,32 +1675,179 @@ showstringspaces=false}
 
 \section{Pilas} 
 
-    Una pila es una implementación dinámica de basada en \textbf{listas enlazadas} 
-    (véase apartado \ref{listasenlazadas}). Tienen la particularidad de que todas 
-    las inserciones y eliminaciones de elementos se realizarán por uno de los extremos
-    de la lista (\textit{cima}).
-
-    Este modo de implementación sólo utiliza la memoria necesaria en cada momento, puesto 
-    que se reserva memoria para cada nuevo nodo que se inserta y se libera para cada nodo
-    que se elimina. Por lo tanto no desperdicia memoria.
-
-    Este modo de implementación no prefija ningún tamaño, como ocurre en la implementación 
-    estática; la pila irá creciendo y decreciendo seún demando la aplicación que se hace de 
-    ella.
-
-    En este tipo de implementación no hay que controlar el \textit{overflow}, aunque si se 
-    debe comprobar que el sistema pudo crear el nodo que se solicitó para insertar un nuevo 
-    elemento en la pila. Es decir, que hay memoria suficiente añ hacer la reserva con las 
-    funciones ya conocidas (\textit{malloc}, \textit{calloc} y \textit{realloc}).
-
     A las pilas se accede de manera \textit{Last in first out (LIFO)}, es decir, el último
-    elemento en entrar es el primero en salir.
+    elemento en entrar es el primero en salir (véase figura \ref{pila01}).
 
-% TODO
-\section{Colas} % TODO
+    Una pila es una colección de elementos homogéneos, llamados nodos, con una relación lineal 
+    entre ellos ($a_i$ sucede a $a_{i-1}$) y a los que se accede por un único punto denominado 
+    \textbf{cima} o \textbf{tope}.
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{resources/pila01.png}
+        \caption{Definición gráfica de pila.}
+        \label{pila01}
+    \end{figure}
+
+    \subsection{Operaciones sobre pila}
+    
+        Las operaciones básicas para el mantenimiento de una pila y de sus elementos se definen
+        como:
+
+        \begin{itemize}
+            \item Inserción, apilación o push.
+            \item Eliminación, desapilación o pop.
+            \item Comprobación de pila vacía.
+            \item Comprobación de pila llena (sólo para pila estática).
+            \item Limpiar todos los elementos de la pila (pop).
+            \item Obtención de tamaño máximo (sólo para pila estática).
+            \item Obtención de cima (primer elemento de la pila).
+        \end{itemize}
+
+    \subsection{Implementación estática de pila}
+
+        La implementación estática se basa en arrays, siendo éste usado como estructura de almacenamiento 
+        de los elementos de la pila. Este array tiene que tener una dimensión prefijada\footnote{
+            Cuando se sobrepasa el límite de almacenamiento de una pila se produce un error de 
+            desbordamiento positivo, también denominado \textbf{overflow}.
+            
+            Por el contrario, cuando se intenta extraer un elemento inexistente de la pila, se producirá 
+            un desbordamiento negativo, también denominado \textbf{underflow}.
+        }, pues estamos 
+        tratando una implementación estática.
+
+        Los elementos de la pila se insertarán comenzando por la posición 1 del array y continuarán 
+        insertándose en posiciones consecutivas. 
+
+        \subsubsection{Declaración y definición de la pila}
+
+            Ya que se basa en un array que almacena los elementos y un número que ejerce de índice 
+            para indicar dínde se encuentra la cima de la pila, usaremos una estructrua como:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    typedef struct 
+    {
+        TipoDato Elementos[10];
+        int cima;
+    } PilaEstatica; \end{lstlisting}
+
+        \subsubsection{Creación de la pila}
+
+            La creación se hace automáticamente cuando defininimos un tipo de dato de nuestra pila:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    PilaEstatica p;\end{lstlisting}
+
+            Siendo que consideramos una pila vacía cuando el índice que representa la cima tenga 
+            el valor $-1$, una inicialización correcta de la pila debería añadir una inicialización 
+            de su índice a este valor:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    p->cima = -1;\end{lstlisting}
+
+        \subsubsection{Inserción de elemento a la pila} % TODO
+
+        \subsubsection{Vaciado de pila} % TODO
+
+        \subsubsection{Obtención de elemento de la pila} % TODO
+
+        \subsubsection{Obtención de total de elementos de la pila} % TODO
+
+        \subsubsection{Comprobación de vaciado de pila} % TODO
+
+        \subsubsection{Comprobación de llenura de pila} % TODO
+
+
+    \subsection{Implementación dinámica de pila}
+
+        Es una implementación dinámica de basada en \textbf{listas enlazadas} 
+        (véase apartado \ref{listasenlazadas}). Tienen la particularidad de que todas 
+        las inserciones y eliminaciones de elementos se realizarán por uno de los extremos
+        de la lista (\textit{cima}).
+
+        Este modo de implementación sólo utiliza la memoria necesaria en cada momento, puesto 
+        que se reserva memoria para cada nuevo nodo que se inserta y se libera para cada nodo
+        que se elimina. Por lo tanto no desperdicia memoria.
+
+        Este modo de implementación no prefija ningún tamaño, como ocurre en la implementación 
+        estática; la pila irá creciendo y decreciendo seún demando la aplicación que se hace de 
+        ella.
+
+        En este tipo de implementación no hay que controlar el \textit{overflow}, aunque si se 
+        debe comprobar que el sistema pudo crear el nodo que se solicitó para insertar un nuevo 
+        elemento en la pila. Es decir, que hay memoria suficiente añ hacer la reserva con las 
+        funciones ya conocidas (\textit{malloc}, \textit{calloc} y \textit{realloc}).
+
+        Técnicamente, la implementación dinámica de una pila es exactamente igual a la implementación 
+        dinámica de una lista enlazada (véase apartado \ref{listasenlazadas}) simplemente añadiendo las 
+        restricciones adecuadas.
+
+\section{Colas}
 
     A las colas se accede de manera \textit{First in first out (FIFO)}, es decir, el primer 
-    elemento en entrar es el primero en salir.
+    elemento en entrar es el primero en salir. Cabe destacar que en muchos textos se hace referencia 
+    a las colas a través de su origen anglosajón \textbf{queque}.
+
+    Una cola es pues, una colección de elementos homogéneos, llamados nodos, con una relación lineal 
+    entre ellos ($a_i$ sucede a $a_{i-1}$) y a los que se accede por sus dos extremos.
+
+    Un extremo se denomina \textbf{cabeza} o \textbf{frente} y es por donde se atiende a los elementos
+    (o se eliminan); mientras que al otro extremo se le denomina \textbf{final} o \textbf{último}, y es 
+    por donde se insertan nuevos elementos (véase figura \ref{cola01}).
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{resources/cola01.png}
+        \caption{Definición gráfica de cola.}
+        \label{cola01}
+    \end{figure}
+
+    \subsection{Implementación estática de cola}
+
+        Las colas estáticas se caracterizan por los siguientes aspectos:
+
+        \begin{itemize}
+            \item Es una implementación basada en arrays. Usaremos un array a modo de estructura de 
+            almacenamiento de los elementos d la cola.
+            \item Es necesario definir su capacidad máxima (dimensión del array), puesto que estamos 
+            trabajando con una implementación estática.
+            \item Es necesario mantener dos índices numéricos. Uno indicando dónde se encuentra la cabeza 
+            de la cola; y el otro dónde se encuentra el final de ésta.
+        \end{itemize}
+
+        Dentro de la implementación estática encontraremos dos variantes:
+
+        \begin{itemize}
+            \item Cola lineal
+            \item Cola circular
+        \end{itemize}
+
+    \subsection{Implementación dinámica de cola}
+
+        Las colas implementadas dinámicamente se caracterizan por estar basadas en las implementaciones 
+        del tipo lista enlazada (véase apartado \ref{listasenlazadas}). Las operaciones no difieren mucho 
+        de las ya estudiadas en éstas, considerándose una cola implementada dinámicamente como una 
+        lista enlazada dinámicamente, pero con restricciones.
+
+    \subsection{Casos especiales de colas}
+
+        Existen algunas implementaciones de colas y conceptos que presentan peculiaridades en cuanto a su 
+        estructura o forma de operar.
+        
+        \subsubsection{Bicola}
+
+            Una bicola, o cola bidireccional se define como un caso especial de cola que permite 
+            realziar tanto inserciones como eliminaciones por cualquiera de sus extremos indistintivamente.
+
+        \subsubsection{Colas de prioridad}
+
+            Se trata de una variante de cola que pretende que los elementos sean extraídos de ella según 
+            una prioridad establecida (los prioritarios salen antes). Para lograr esto es lógico que cada 
+            elemento de la cola debe tener una prioridad, y la inserción debe hacerse en función de ésta.
+
+            Normalmente la prioridad se establece mediante un valor numérico; y cuando menor sea éste 
+            mayor será su prioridad. A igualdad de prioridad entre los elementos, la extracción de la cola 
+            se realizará en orden de llegada (funcionamiento genérico de las colas).
 
 \section{Recursividad}
 
