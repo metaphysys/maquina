@@ -1917,11 +1917,153 @@ showstringspaces=false}
 
             \paragraph{Técnica de vuelta atrás o backtracking}
 
-                \subparagraph{Esquema general de estos algoritmos}
+                Los algoritmos de vuelta atrás se utilizan para encontrar soluciones a un problema 
+                mediante la exploración de todas las posibilidades.
 
+                No se siguen unas reglas refinadas para la búsqueda de la solución, simplemente una 
+                búsqueda sistemática que más o menos viene a significar que hay que probar todos los 
+                casos posibles hasta encontrar la solución, o en su defecto queno existe solución para 
+                el problema.
+
+                Para conseguir este propósito se separa la búsqueda en varias búsquedas parciales o 
+                subtareas; así mismo, estas subtareas suelen incluir más subtareas (vemos pues la 
+                recursividad).
+
+                Puesto que a menudo nos interesa conocer todas las posibles soluciones a un problema, 
+                estos algoritmos se pueden modificar fácilmente para obtner una sola solución o todas 
+                las posibles.
+
+                \subparagraph{Ejemplo: Recorrido del Caballo}
+
+                    Se dispone de un tablero de ajedrez (de dimensión $8\times 8$) y de un caballo que 
+                    se mueve siguiendo las reglas clásicas del juego. El objetivo es encontrar una manera 
+                    de recorrer todo el tablero partiendo de una casilla determinada, de forma que el 
+                    caballo pase una sola vez por cada casilla.
+
+                    Para resolver el problema hay que realizr todos los movimientos posibles hasta que 
+                    se cubra el tablero completo, o hasta que no se pueda avanzar más (en cuyo caso hay 
+                    que dar marcha atrás).
+
+                    El tablero será representado como una matriz $8\times 8$ de números enteros. Inicialmente 
+                    todas las casillas contendrán el valor 0, indicando que no han sido visitadas aún.
+                    Conforme el caballo pase por ellas su valor pasará a ser el número de movimiento en el 
+                    que el caballo pasó por esa casilla.
+
+                    Con las coordenadas de la casilla en las que se encuentre el caballo y las 8 coordenadas 
+                    relativas de las casillas a las que puede moverse determinaremos los posibles movimientos.
+
+                    Las coordenadas relativas las almacenaremos en dos arrays:
+
+                    \begin{equation}
+                        \begin{split}
+                            ejex &= [2,1,-1,-2,-2,-1,1,2] \\
+                            ejey &= [1,2,2,1,-1,-2,-2,-1]
+                            \nonumber
+                        \end{split}
+                    \end{equation}
+
+                    Así, a partir de una posición en la que se encuentre el caballo, sumándole a la 
+                    coordenada $x$ de la posción, el primer valor de $ejex$ y a la coordenada $y$ el 
+                    primer valor de $ejey$, obtendremos la posición correspondiente al movimiento 1.
+                    El proceso es similar para el resto de movimientos, cambiando las posiciones de 
+                    $ejex$ y $ejey$ que se suman a las coordenadas.
+
+                    Cuando se encuentra una solución, una variable que se pasa por referencia es puesta 
+                    a 1.
+
+                    Es necesario indicar que para codificar la solución es necesario tener en cuenta 
+                    otros factores, como controlar que no se salga de los límites del tablero o no 
+                    pisar una casilla ya cubierta (selección del candidato).
+
+                    Se determina que hay una solución cuando ya no hay más casillas que recorrer, es 
+                    decir, se hayan realizado los 64 movimientos.
+
+                    
+                    \begin{lstlisting}[language=C,numbers=left,basicstyle=\small]
+    #include <stdio.h>
+
+    #define N 5
+    #define ncuad N*N
+    
+    const int   ejex[8] = {-1,-2,-2,-1,1,2,2,1},
+                ejey[8] = {-2,-1,1,2,2,1,-1,-2};
+    
+    
+    void mover(int tablero[][N], int i, int pos_x, int pos_y, int *q)
+    {
+        int k,u,v;
+    
+        k = 0;
+        *q = 0;
+    
+        do {
+            u = pos_x + ejex[k];
+            v = pos_y + ejey[k];
+    
+            if (u >= 0 && u < N && v >= 0 && v < N) {
+                if (tablero[u][v] == 0) {
+                    tablero[u][v] = i;
+                    if (i < ncuad) {
+                        mover(tablero, i+1, u, v, q);
+                        if (!*q) tablero[u][v] = 0; 
+                    }
+                    else *q = 1;
+                }
+            }
+            k++;
+        } while (!*q & k < 8);
+    }
+    
+    int main(void)
+    {
+        int tablero[N][N];
+        int i,j,q;
+    
+        for (i = 0; i < N; i++)
+            for (j = 0; j < N; j++)
+                tablero[i][j] = 0;
+    
+        tablero[0][0] = 1;
+        mover(tablero,2,0,0,&q);
+    
+        if (q)
+        {
+            for (i = 0; i < N; i++) {
+                for (j = 0; j < N; j++)
+                    printf("%3d", tablero[i][j]);
+                putchar('\n');
+            }
+        }
+        else 
+            printf("\nNo existe solucion\n");
+        return 0;
+    }\end{lstlisting}
+                    
     \subsection{Ventajas e inconvenientes de la recursividad}
 
-    \subsection{Eliminación de la recursividad}
+        La recursividad, como es lógico presenta tanto ventajas como inconvenientes que hay que 
+        tener en cuenta a la hora de implementar sistemas recursivos:
+
+        Las principales \textbf{ventajas} que ofrece son:
+
+        \begin{itemize}
+            \item Permite la resolución de problemas de manera natural, sencilla y elegante.
+            \item No es necesario definir la secuencia de pasos exacta para resolver el problema.
+            \item Simplicidad de comprensión de los algoritmos.
+            \item Reducción notable del tamaño del código.
+        \end{itemize}
+
+        Mientras que los principales inconvenientes o \textbf{desventajas} son:
+
+        \begin{itemize}
+            \item No siempre resulta fácil encontrar la solución recursiva a un problema.
+            \item Son menos eficientes que las soluciones iterativas, tanto en consumo de memoria 
+            como en velocidad. Esto es debido a que cada llamada recursiva implica una asignación 
+            dinámica de memoria (de la zona conocida como Pila) y las sucesivas llamadas ralentizan 
+            la ejecución.
+            \item Algunos autores la tachan de confusa y peligrosa, puesto que puede llegar a agotar 
+            los recursos de memoria del sistema.
+        \end{itemize}
 
 \section{Árboles}
 
