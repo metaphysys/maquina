@@ -2240,7 +2240,109 @@ showstringspaces=false}
         }
     }\end{lstlisting}
 
+            \paragraph{Recorridos de árboles} Como hemos visto anteriormente, la necesidad de 
+            visualizar o acceder al contenido de la infomación almacenada en un árbol implica tener 
+            que moverse entre los nodos que conforman su estructura.
 
+            En una estructura lineal resulta fácil y trivial establecer un criterio de movimiento 
+            por la misma. Pero en un árbol esa tarea no es tan simple.
+
+            La definición de recorrer para este caso es la de visitar todos los nodos del árbol, de tal 
+            forma que cada uno sea visitado una única vez. Existen dos tipos de recorrido:
+
+            \subparagraph{Recorridos en profundidad} Para el que existen tres métodos de naturaleza 
+            recursiva, que imponen un orden secuencial y lineal sobre los nodos del árbol. Realizando 
+            cada uno de estos métodos siempre las actividades:
+
+            \begin{itemize}
+                \item Visitar el nodo raíz.
+                \item Recorrer el subárbol izquierdo.
+                \item Recorrer el subárbol derecho.
+            \end{itemize}
+
+            Pero cada método se diferencia en el oden en el que llevan a cabo estas actividades:
+
+            El método de recorrido \textbf{PreOrden} o \textbf{PreOrder} se caracteriza por visitar el 
+            nodo raíz antes de recorrer el subárbol izquierdo y derecho, respectivamente:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    void PreOrder(Nodo *3arbol) {
+        if (arbol) {
+            printf("%d,", arbol->valor);
+            PreOrder(arbol->izquierdo);
+            PreOrder(arbol->derecho);
+        }
+    }\end{lstlisting}
+
+            El método \textbf{InOrden} o \textbf{InOrder} primero recorre el subárbol izquierdo, después 
+            visita el nodo raíz y finalmente recorre el subárbol derecho:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    void InOrder(Nodo *arbol) {
+        if (arbol) {
+            InOrder(arbol->izquierdo);
+            printf("%d,", arbol->valor);
+            InOrder(arbol->derecho);
+        }
+    }\end{lstlisting}
+
+            El método \textbf{PostOrden} o \textbf{PostOrder} recorre primero los subárboles izquierdo 
+            y derecho respectivamente, para después visitar el nodo raíz:
+
+            \begin{lstlisting}[language=C,numbers=left]
+    void PosOrder(Nodo *arbol) {
+        if (arbol) {
+            PosOrder(arbol->derecho);
+            PosOrder(arbol->izquierdo);
+            printf("%d,", arbol->valor);
+        }
+    }\end{lstlisting}
+            
+            Viendo la figura \ref{arbol03} podemos realizar un ejemplo de los 3 métodos de recorrido en profundidad.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/arbol03.png}
+                \caption{Ejemplo de árbol binario de búsqueda para mostrar ejemoplos de recorridos.}
+                \label{arbol03}
+            \end{figure}
+
+            Obteniendo los resultados: 
+
+            \begin{itemize}
+                \item Recorrido PreOrder: $10,5,3,1,4,8,11,50,17,12,85$
+                \item Recorrido InOrder: $1,3,4,5,8,10,11,12,17,50,85$
+                \item Recorrido PostOrder: $85,12,17,50,11,8,4,1,3,5,10$
+            \end{itemize}
+
+            El uso de uno u otro método ed recorrido en profundidad responde a las necesidades y 
+            restricciones impuestas por el problema que se trata de resolver, no obstante es común usar
+            cada recorrido en:
+
+            \begin{itemize}
+                \item PreOrder: en bases de datos con estructuras jerárquicas.
+                \item InOrder: en búsquedas secuenciales.
+                \item Para la evaluación y tratamiento de expresiones aritméticas.
+            \end{itemize}
+
+            \subparagraph{Recorrido en amplitud, anchura o por niveles} Este método consiste en comenzar 
+            desde el nivel $i=0$ hasta la altura $h$ del árbol, visitando de izquierda a derecha los nodos 
+            de profundidad $i$.
+
+            Como observamos, un nodo $n_1$ aparece antes 
+            que $n_2$ en el listado por niveles, si la 
+            profundidad de $n_1$ es menor que la profundidad de $n_2$, y usando el orden de los nodos definido 
+            (de izquierda a derecha), en caso de que tengan la misma profundidad.
+
+            En el caso de la figura \ref{arbol03} el resultado obtenido tras un recorrido de este tipo 
+            sería:
+
+            \[ 10, 5, 11, 3, 8, 50, 1, 4, 17, 85, 12 \]
+
+            Su implementación, debido a que no se basa en las relaciones padre-hijo no se puede hacer de forma 
+            recursiva.
+
+            % TODO Código implementación.
 
     \subsection{Árbol Binario de Busqueda Equilibrado o Balanceado}
 
