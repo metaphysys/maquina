@@ -141,6 +141,72 @@
 
     \section{El programador Python}
 
+\chapter{El Hacker}
+
+    \section{Reconocimiento}
+            
+        \subsection{nmap}
+
+            % https://nmap.org/man/es/man-host-discovery.html
+
+            \subsubsection{\textbf{-sL (Sondeo de lista)}} El sondeo de lista es un tipo de descubrimiento
+            de sistemas que tan solo lista cada equipo de la/s red/es especificada/s, sin enviar paquetes 
+            de ningún tipo a los objetivos. Por omisión, Nmap va a realizar una resolución inversa DNS en 
+            los equipos, para obtener sus nombres. Es sorprendente cuanta información útil se puede obtener 
+            del nombre de un sistema. Por ejemplo fw.chi.playboy.com es el cortafuegos de la oficina en 
+            Chicago de Playboy Enterprises. Adicionalmente, al final, Nmap reporta el número total de 
+            direcciones IP. El sondeo de lista es una buena forma de asegurarse de que tenemos las 
+            direcciones IP correctas de nuestros objetivos. Si se encontraran nombres de dominio que no 
+            reconoces, vale la pena investigar un poco más, para evitar realizar un análisis de la red 
+            de la empresa equivocada.
+
+            Ya que la idea es simplemente emitir un listado de los sistemas objetivo, las opciones de 
+            mayor nivel de funcionalidad como análisis de puertos, detección de sistema operativo, o 
+            análisis ping no pueden combinarse con este sondeo. Si desea deshabilitar el análisis ping 
+            aún realizando dicha funcionalidad de mayor nivel, compruebe la documentación de la opción -P0.
+
+            \subsubsection{\textbf{-sP (Sondeo ping)}} Esta opción le indica a Nmap que únicamente realice 
+            descubrimiento de sistemas mediante un sondeo ping, y que luego emita un listado de los equipos 
+            que respondieron al mismo. No se realizan más sondeos (como un análisis de puertos o detección 
+            de sistema operativo). A diferencia del sondeo de lista, el análisis ping es intrusivo, ya que 
+            envía paquetes a los objetivos, pero es usualmente utilizado con el mismo propósito. Permite 
+            un reconocimiento liviano de la red objetivo sin llamar mucho la atención. El saber cuántos 
+            equipos se encuentran activos es de mayor valor para los atacantes que el listado de cada una 
+            de las IP y nombres proporcionado por el sondeo de lista.
+
+            De la misma forma, los administradores de sistemas suelen encontrar valiosa esta opción. 
+            Puede ser fácilmente utilizada para contabilizar las máquinas disponibles en una red, o 
+            monitorizar servidores. A esto se lo suele llamar barrido ping, y es más fiable que hacer 
+            ping a la dirección de broadcast, ya que algunos equipos no responden a ese tipo de consultas.
+
+            La opción -sP envía una solicitud de eco ICMP y un paquete TCP al puerto 80 por omisión. 
+            Cuando un usuario sin privilegios ejecuta Nmap se envía un paquete SYN (utilizando la llamada 
+            connect()) al puerto 80 del objetivo. Cuando un usuario privilegiado intenta analizar objetivos 
+            en la red Ethernet local se utilizan solicitudes ARP (-PR) a no ser que se especifique la 
+            opción --send-ip.
+
+            La opción -sP puede combinarse con cualquiera de las opciones de sondas de descubrimiento 
+            (las opciones -P*, excepto -P0) para disponer de mayor flexibilidad. Si se utilizan cualquiera 
+            de las opciones de sondas de descubrimiento y número de puerto, se ignoran las sondas por omisión 
+            (ACK y solicitud de eco ICMP). Se recomienda utilizar estas técnicas si hay un cortafuegos con un 
+            filtrado estricto entre el sistema que ejecuta Nmap y la red objetivo. Si no se hace así pueden 
+            llegar a pasarse por alto ciertos equipos, ya que el cortafuegos anularía las sondas o las 
+            respuestas a las mismas.
+
+            \subsubsection{\textbf{-P0 (No ping)}} Con esta opción, Nmap no realiza la etapa de descubrimiento. 
+            Bajo circunstancias normales, Nmap utiliza dicha etapa para determinar qué máquinas se encuentran 
+            activas para hacer un análisis más agresivo. Por omisión, Nmap sólo realiza ese tipo de sondeos, 
+            como análisis de puertos, detección de versión o de sistema operativo contra los equipos que se 
+            están «vivos». Si se deshabilita el descubrimiento de sistemas con la opción -P0 entonces Nmap 
+            utilizará las funciones de análisis solicitadas contra todas las direcciones IP especificadas. 
+            Por lo tanto, si se especifica una red del tamaño de una clase B cuyo espacio de direccionamiento 
+            es de 16 bits, en la línea de órdenes, se analizará cada una de las 65.536 direcciones IP. El 
+            segundo carácter en la opción -P0 es un cero, y no la letra O. Al igual que con el sondeo de lista, 
+            se evita el descubrimiento apropiado de sistemas, pero, en vez de detenerse y emitir un listado de 
+            objetivos, Nmap continúa y realiza las funciones solicitadas como si cada IP objetivo se encontrara 
+            activa.
+
+
 \chapter{El sistema}
 
     \section{Servidor gráfico}
