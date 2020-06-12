@@ -49,7 +49,7 @@ showstringspaces=false}
 \tableofcontents
 \newpage
 
-\section{Historia}
+\section{Breve contextualización}
 
     Un conjunto de instrucciones que pueden ser ejecutadas en una CPU, junto con su 
     sistema de codificación se denomina \textbf{lenguaje máquina}.
@@ -113,11 +113,39 @@ showstringspaces=false}
     especialmente veloz y eficiente, pues con él se puede hacer prácticamente todo 
     lo que su hardware permite realizar.
 
-    Fue desarrollado por \textit{Brian Kernighan} y \textit{Dennis Ritchie}\footnote{
-        \textit{Dennis Ritchie} tiene además la importante paternidad del sistema 
+    Fue desarrollado por \textit{Dennis Ritchie}\footnote{
+        \textit{Dennis Ritchie} tiene además la importante paternidad, junto a 
+        \textit{Ken Thompson}, del sistema 
         operativo UNIX. De hecho, C y UNIX se encuentran íntimamente unidos.
-    } a principios
-    de la década de los 70 en \textit{Bell Labs}.
+        También fue coautor junto a \textit{Brian Kernighan} del manual 
+        \textit{El lenguaje de programación C}, que durante años fue el estándar 
+        de facto del lenguaje (K\&R C), hasta la aparición del ANSI C (para el que 
+        apareció la segunda edición de \textit{El lenguaje de Programación C}).
+    } a principios de la década de los 70 en \textit{Bell Labs}.
+
+    C nace como evolución natural del lenguaje B (de ahí su nombre).
+
+    \subsection{Filosofía}
+
+        Uno de los objetivos de diseño del lenguaje C es que solo sean necesarias 
+        unas pocas instrucciones en lenguaje máquina para traducir cada elemento 
+        del lenguaje, sin que haga falta un soporte intenso en tiempo de ejecución. 
+        Es muy posible escribir C a bajo nivel de abstracción; de hecho, C se usó 
+        como intermediario entre diferentes lenguajes.
+
+        En parte, a causa de ser de relativamente bajo nivel y de tener un modesto 
+        conjunto de características, se pueden desarrollar compiladores de C fácilmente. 
+        En consecuencia, el lenguaje C está disponible en un amplio abanico de 
+        plataformas (más que cualquier otro lenguaje). Además, a pesar de su naturaleza 
+        de bajo nivel, el lenguaje se desarrolló para incentivar la programación 
+        independiente de la máquina. Un programa escrito cumpliendo los estándares e 
+        intentando que sea portátil puede compilarse en muchos computadores.
+
+        C se desarrolló originalmente (conjuntamente con el sistema operativo Unix, 
+        con el que ha estado asociado mucho tiempo) por programadores para programadores. 
+        Sin embargo, ha alcanzado una popularidad enorme, y se ha usado en contextos muy 
+        alejados de la programación de software de sistema, para la que se diseñó 
+        originalmente. 
 
 \section{El compilador gcc}\label{compilador}
 
