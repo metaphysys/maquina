@@ -147,6 +147,43 @@ showstringspaces=false}
         alejados de la programación de software de sistema, para la que se diseñó 
         originalmente. 
 
+\section{Hola mundo}
+
+    Como es costumbre en la programación. El primer programa a escribir en un lenguaje es e
+    el conocido como \textit{Hola mundo} o \textit{Hello world}.
+
+    \begin{lstlisting}[language=C,numbers=left]
+    #include <stdio.h>
+    main()
+    {
+        printf("Hola mundo \n");
+    }\end{lstlisting}
+
+    La primera línea del programa, 
+
+    \begin{lstlisting}[language=C]
+        #include <stdio.h>\end{lstlisting}
+
+    indica al compilador (véase sección \ref{compilador}) que incluya información 
+    sobre la librería estándar \textit{input/output}. 
+    
+    Posteriormene definimos una función llamada \textit{main} que no recibe argumentos,
+
+    \begin{lstlisting}[language=C]
+        main() {}\end{lstlisting}
+
+    siendo lo que encuentra entre las llaves el código de esta función, el cual,
+    
+    \begin{lstlisting}[language=C]
+        printf("Hola mundo \n");\end{lstlisting}
+
+    llama a la función \textit{printf}, que recibe como argumento una secuencia de caracteres,
+    para ser impresos. Como nota adicional, el carácter $\backslash n$ indica un carácter 
+    de salto de línea.
+
+    Estos elementos se desarrollarán progresivamente en el presente documento.
+    
+
 \section{El compilador gcc}\label{compilador}
 
     Los compiladores de Unix han sido tan importantes que se han tomado como estándar para la industria 
@@ -168,10 +205,9 @@ showstringspaces=false}
 
     \begin{lstlisting}[language=C,numbers=left]
     #include <stdio.h>
-    int main()
+    main()
     {
-        printf("Hola mundo\n");
-        return 0;
+        printf("Hola mundo \n");
     }\end{lstlisting}
 
     Compilándolo con gcc obtendremos el binario ejecutable (\textit{./hola}).
@@ -220,7 +256,7 @@ showstringspaces=false}
 
         Podemos además optimizar el binario para una microarquitectura de CPU concreta o para una familia en específico.
 
-        \begin{lstlisting}[language=bash]
+        \begin{lstlisting}[language=bash,basicstyle=\small]
     #Para una de estas familias o tipos de CPU
     gcc -m486 hola.c -o hola
     gcc -m386 hola.c -o hola
