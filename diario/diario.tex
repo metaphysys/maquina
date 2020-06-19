@@ -26,6 +26,85 @@
 
 \chapter{El Administrador}
 
+    \section{Redes}
+
+        \subsection{Cellular Connections}
+
+            Para ello podemos usar la herramienta \textit{mmcli} (\textit{Modem Manager CLI}). 
+            \textit{mmcli} es un símil de \textit{nmcli} (\textit{Network Manager CLI}) usado 
+            para la administración de módems. Para listar los módems detectados podemos utilizar 
+            el argumento $-L$.
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    # mmcli -L
+    /org/freedesktop/ModemManager1/Modem/0 [GOSUNCN] ME3630\end{lstlisting}
+
+            Estos módems se identifican numéricamente, siendo en este caso el $0$ el identificador 
+            del modem asignado. Podemos comprobar sus datos usando el argumento $-m$ seguido de este
+            identificador.
+
+            \begin{lstlisting}[language=bash,basicstyle=\tiny]
+    # mmcli -m 0
+    --------------------------------
+    General  |            dbus path: /org/freedesktop/ModemManager1/Modem/0
+             |            device id: df66c61f4f06a092592713bce58954c6d091a565
+    --------------------------------
+    Hardware |         manufacturer: GOSUNCN
+             |                model: ME3630
+             |    firmware revision: ME3630E1CV1.0B12
+             |            supported: gsm-umts, lte
+             |              current: gsm-umts, lte
+             |         equipment id: 869374040605767
+    --------------------------------
+    System   |               device: /sys/devices/pci0000:00/0000:00:15.0/usb1/1-5
+             |              drivers: option1, cdc_ether
+             |               plugin: ZTE
+             |         primary port: ttyUSB2
+             |                ports: ttyUSB0 (qcdm), ttyUSB2 (at), ttyUSB1 (at)
+    --------------------------------
+    Status   |       unlock retries: sim-pin (3), sim-puk (10)
+             |                state: connected
+             |          power state: on
+             |          access tech: 1xrtt, evdo0, lte
+             |       signal quality: 80% (recent)
+    --------------------------------
+    Modes    |            supported: allowed: 2g; preferred: none
+             |                       allowed: 3g; preferred: none
+             |                       allowed: 4g; preferred: none
+             |                       allowed: 2g, 3g, 4g; preferred: none
+             |              current: allowed: any; preferred: none
+    --------------------------------
+    IP       |            supported: ipv4, ipv6, ipv4v6
+    --------------------------------
+    3GPP     |                 imei: 869374040605767
+             |          operator id: 21407
+             |        operator name: M0
+             |         registration: home
+    --------------------------------
+    3GPP EPS | ue mode of operation: csps-1
+    --------------------------------
+    SIM      |            dbus path: /org/freedesktop/ModemManager1/SIM/0
+    --------------------------------
+    Bearer   |            dbus path: /org/freedesktop/ModemManager1/Bearer/0\end{lstlisting}
+    
+            Es posible que la tarjeta SIM se encuentre bloqueado por medio de un PIN. 
+            En este caso, el estado o \textit{state} del módem será \textit{locked}. 
+            Para introducir el código PIN al módem $0$:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    # mmcli -i 0 --pin=<PIN>
+    successfully sent PIN code to the SIM\end{lstlisting}
+
+            Otros comandos que involucran el código PIN son:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    # mmcli -i 0 --pin=<PIN> --enable-pin
+    # mmcli -i 0 --pin=<PIN> --disable-pin
+    # mmcli -i 0 --pin=<PIN> --change-pin=<NEW_PIN>
+    # mmcli -i 0 --puk=<PUK>\end{lstlisting}
+            
+    % TODO: docs.ubuntu.com/core/en/stacks/network/network-manager/docs/configure-cellular-connections
+
     \section{Watchdog}
 
     El watchdog (perro guardían o vigilante) del kernel de Linux se utiliza para 
